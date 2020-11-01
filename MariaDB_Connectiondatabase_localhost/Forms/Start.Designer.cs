@@ -35,18 +35,24 @@
             this.cbTable = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridElement = new System.Windows.Forms.DataGridView();
+            this.btInsert = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
             this.panelIntestazione.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElement)).BeginInit();
             this.SuspendLayout();
             // 
             // panelIntestazione
             // 
+            this.panelIntestazione.Controls.Add(this.button4);
+            this.panelIntestazione.Controls.Add(this.button3);
+            this.panelIntestazione.Controls.Add(this.btInsert);
             this.panelIntestazione.Controls.Add(this.cbTable);
             this.panelIntestazione.Controls.Add(this.button1);
             this.panelIntestazione.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelIntestazione.Location = new System.Drawing.Point(0, 0);
             this.panelIntestazione.Name = "panelIntestazione";
-            this.panelIntestazione.Size = new System.Drawing.Size(800, 100);
+            this.panelIntestazione.Size = new System.Drawing.Size(800, 155);
             this.panelIntestazione.TabIndex = 0;
             // 
             // cbTable
@@ -55,7 +61,7 @@
             this.cbTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.cbTable.ForeColor = System.Drawing.Color.White;
             this.cbTable.FormattingEnabled = true;
-            this.cbTable.Location = new System.Drawing.Point(174, 13);
+            this.cbTable.Location = new System.Drawing.Point(13, 77);
             this.cbTable.Name = "cbTable";
             this.cbTable.Size = new System.Drawing.Size(222, 28);
             this.cbTable.TabIndex = 1;
@@ -65,7 +71,7 @@
             this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button1.Location = new System.Drawing.Point(13, 13);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(107, 58);
+            this.button1.Size = new System.Drawing.Size(221, 58);
             this.button1.TabIndex = 0;
             this.button1.Text = "Connection";
             this.button1.UseVisualStyleBackColor = true;
@@ -92,13 +98,44 @@
             dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridElement.DefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridElement.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridElement.Location = new System.Drawing.Point(0, 100);
+            this.dataGridElement.Location = new System.Drawing.Point(0, 155);
             this.dataGridElement.Name = "dataGridElement";
             this.dataGridElement.RowHeadersWidth = 51;
             this.dataGridElement.RowTemplate.Height = 24;
-            this.dataGridElement.Size = new System.Drawing.Size(800, 350);
+            this.dataGridElement.Size = new System.Drawing.Size(800, 295);
             this.dataGridElement.TabIndex = 1;
             this.dataGridElement.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridElement_CellClick);
+            // 
+            // btInsert
+            // 
+            this.btInsert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btInsert.Location = new System.Drawing.Point(384, 13);
+            this.btInsert.Name = "btInsert";
+            this.btInsert.Size = new System.Drawing.Size(85, 38);
+            this.btInsert.TabIndex = 2;
+            this.btInsert.Text = "INSERT";
+            this.btInsert.UseVisualStyleBackColor = true;
+            this.btInsert.Click += new System.EventHandler(this.btInsert_Click);
+            // 
+            // button3
+            // 
+            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button3.Location = new System.Drawing.Point(384, 57);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(85, 38);
+            this.button3.TabIndex = 3;
+            this.button3.Text = "MODIFY";
+            this.button3.UseVisualStyleBackColor = true;
+            // 
+            // button4
+            // 
+            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button4.Location = new System.Drawing.Point(384, 101);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(85, 38);
+            this.button4.TabIndex = 4;
+            this.button4.Text = "DELETE";
+            this.button4.UseVisualStyleBackColor = true;
             // 
             // Start
             // 
@@ -124,6 +161,9 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridElement;
         private System.Windows.Forms.ComboBox cbTable;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button btInsert;
     }
 }
 

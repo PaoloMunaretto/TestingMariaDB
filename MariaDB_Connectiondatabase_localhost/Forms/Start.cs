@@ -104,7 +104,11 @@ namespace MariaDB
             }
         }
 
-
+        private void btInsert_Click(object sender, EventArgs e)
+        {
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), "INSERT INTO ");
+            modify.ShowDialog();
+        }
 
 
 
@@ -119,6 +123,27 @@ namespace MariaDB
         //-----------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------  Metods not used, only for Testing
         //-----------------------------------------------------------------------------------------------------
+
+        /// <summary>
+        /// Otteniamo il nome (ed il tipo di elemento)di ogni colonna della tabella
+        /// </summary>
+        /// <param name="dataGrid"></param>
+        public string GetNameAndTypeColum(DataGridView dataGrid)
+        {
+            StringBuilder st = new StringBuilder();
+            for (int i = 0; i < dataGrid.Columns.Count; i++)
+            {
+                //Otteniamo il nome della colonna ed il valore del tipo di elemento 
+                st.Append(dataGrid.Columns[i].Name /*+" " + dataGrid.Columns[i].ValueType.ToString().Replace("System", "")*/);
+
+                if (i < dataGrid.Columns.Count - 1)
+                {
+                    st.Append(",");
+                }
+            }
+            //MessageBox.Show(st.ToString());
+            return st.ToString();
+        }
 
         /// <summary>
         /// Visualizziamo una specifica colonna della tabella di un database
@@ -174,6 +199,6 @@ namespace MariaDB
             {
                 MessageBox.Show(ex.ToString());
             }
-        }
+        }       
     }
 }

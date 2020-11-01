@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,7 @@ namespace MariaDB
         /// </summary>
         /// <param name="dataGrid">dataGridView di riferimento</param>
         /// <param name="Header">Elementi di riferimento Splittati dal Comma (ASCII TABLE 0x2C) </param>
-        public void SetUpDataGridWithString(DataGridView dataGrid, string Header)
+        public void SetUpDataGridViewHeaderString(DataGridView dataGrid, string Header)
         {
             dataGrid.Columns.Clear();
             //Carichiamo tutti gli elementi della List<string come colonne di testo
@@ -27,6 +28,16 @@ namespace MariaDB
                 txtcol0.Name = item;
                 dataGrid.Columns.Add(txtcol0);
             }
+        }
+
+        public void SetupDataGridViewHeaderColor(DataGridView dataGrid)
+        {
+            dataGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.Lime;
+            dataGrid.ColumnHeadersDefaultCellStyle.ForeColor = Color.Black;
+            dataGrid.EnableHeadersVisualStyles = false;
+
+            dataGrid.AllowUserToAddRows = false;
+            dataGrid.Rows.Add();
         }
     }
 }

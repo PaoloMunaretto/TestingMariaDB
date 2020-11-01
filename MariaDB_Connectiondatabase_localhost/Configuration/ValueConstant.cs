@@ -42,6 +42,8 @@ namespace MariaDB
 
         public string connectionOk = "Connection open";
         public string titleReference = "Reference Object";
+        public string save = "SAVE INFORMATION";
+        public string saveinfo = "ARE YOU SHURE TO SAVE?";
 
     }
 }
