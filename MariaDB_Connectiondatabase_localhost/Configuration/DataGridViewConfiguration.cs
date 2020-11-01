@@ -30,6 +30,10 @@ namespace MariaDB
             }
         }
 
+        /// <summary>
+        /// Settiamo il colore dell'intestazione della tabella e l'utente non inserisce nuove righe
+        /// </summary>
+        /// <param name="dataGrid"></param>
         public void SetupDataGridViewHeaderColor(DataGridView dataGrid)
         {
             dataGrid.ColumnHeadersDefaultCellStyle.BackColor = Color.Lime;

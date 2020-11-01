@@ -9,12 +9,14 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Forms;
 
 namespace MariaDB
 {
     public class QueryDatabase
     {
+        ValueConstant valCost = new ValueConstant();
+
         /// <summary>
         /// Restituiamo tutte le tabelle presenti nel database 
         /// </summary>
@@ -23,10 +25,10 @@ namespace MariaDB
         /// <returns></returns>
         public string ReadAllTablesMariaDB(string stringConnection, string query)
         {
-            string row = ""; 
+            string row = "";
             MySqlConnection connection = new MySqlConnection(stringConnection);
             MySqlCommand command = new MySqlCommand(query, connection);
-           // command.CommandText = query;
+            // command.CommandText = query;
             MySqlDataReader Reader;
             connection.Open();
             Reader = command.ExecuteReader();
@@ -40,7 +42,41 @@ namespace MariaDB
             }
             connection.Close();
 
-            return row;        
+            return row;
+        }
+
+        public void InsertElement(string stringConnection, string query)
+        {
+            try
+            {
+                MySqlConnection connection = new MySqlConnection(stringConnection);
+                MySqlCommand command = new MySqlCommand(query, connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                MessageBox.Show(valCost.insertCompeted);
+
+            }
+            catch (Exception ex)
+            { 
+                MessageBox.Show(ex.Message, valCost.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public int getNewID(string connection, string tableSelected, string Column)
+        {
+            int id = 1;
+            string query = String.Format(valCost.orderDesc, tableSelected,Column);
+
+            DataTable table = GetValues(connection, query);
+
+            if (table.Rows.Count != 0)
+            {
+                id = (int)table.Rows[0][0] +1;
+            }
+
+            return id;
         }
 
         /// <summary>
@@ -49,7 +85,7 @@ namespace MariaDB
         /// <param name="stringConnection"></param>
         /// <param name="query"></param>
         /// <returns></returns>
-        public DataTable RowsInTableMariaDB(string stringConnection, string query)
+        public DataTable GetValues(string stringConnection, string query)
         {
             DataTable dTable = new DataTable();
             try
@@ -65,12 +101,15 @@ namespace MariaDB
                 // this will query your database and return the result to your datatable
                 sqlAdapter.Fill(dTable);
 
+                {/*
                 Console.WriteLine("***************************************");
                 foreach (DataColumn col in dTable.Columns)
                 {
                     Console.WriteLine("Column:{0} Type:{1}", col.ColumnName, col.DataType);
                 }
                 Console.WriteLine("***************************************");
+                */
+                }
 
                 sqlConnection.Close();
                 sqlAdapter.Dispose();
@@ -115,7 +154,6 @@ namespace MariaDB
             {
                 return null;
             }
-           
         }
     }
 }

@@ -19,11 +19,11 @@ namespace MariaDB
         Country country = new Country();
 
 
-
         public int CityID { get => cityID; set => cityID = value; }
         public string CityName { get => cityName; set => cityName = value; }
         public int ReferenceContry { get => referenceContry; set => referenceContry = value; }
         public Country Country { get => country; set => country = value; }
+
 
         public static explicit operator City(DataRow dr)
         {

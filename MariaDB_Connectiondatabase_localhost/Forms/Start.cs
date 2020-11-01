@@ -27,6 +27,7 @@ namespace MariaDB
             stringConnection = "server=" + valConst.nameServer + ";port=" + valConst.port + ";Database=" + valConst.databaseName + ";uid=" + valConst.nameUser + ";password=" + valConst.password;
 
             dataGridElement.AllowUserToAddRows = false;
+            panelButtons.Enabled = false;
 
             valConst.SetTablesArray(queryDB.ReadAllTablesMariaDB(stringConnection, valConst.readAllTable));
 
@@ -46,9 +47,13 @@ namespace MariaDB
         {
             string query = valConst.readTable + cbTable.Text;
 
-            DataTable table = queryDB.RowsInTableMariaDB(stringConnection, query);
+            DataTable table = queryDB.GetValues(stringConnection, query);
 
             SetTableInDataGrid(dataGridElement, table);
+            if (cbTable.Text.Length > 1)
+            {
+                panelButtons.Enabled = true;
+            }
         }
 
         //-----------------------------------------------------------------------------------------------------
@@ -105,14 +110,25 @@ namespace MariaDB
         }
 
         private void btInsert_Click(object sender, EventArgs e)
-        {
-            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), "INSERT INTO ");
+        {         
+            //Apriamo un nuovo Form per inserire un nuovo elemento
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.insert, stringConnection);
             modify.ShowDialog();
         }
 
+        private void btNewID_Click(object sender, EventArgs e)
+        {
+            //Visualizziamo il nuovo valore ID che sarà da inserire per un nuovo elemento
+            MessageBox.Show("NEW ID ELEMENT : " + queryDB.getNewID(stringConnection, cbTable.Text, dataGridElement.Columns[0].Name).ToString(),"NEW ID" );
+        }
 
-
-
+        private void btModify_Click(object sender, EventArgs e)
+        {
+            //Apriamo un nuovo Form per modificare l'elemento selezionato
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.update, stringConnection);
+            //modify.FirstValueReadOnly = true;
+            modify.ShowDialog();
+        }
 
 
 
