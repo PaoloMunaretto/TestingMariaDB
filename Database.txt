@@ -1,0 +1,150 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Versione server:              10.5.4-MariaDB - mariadb.org binary distribution
+-- S.O. server:                  Win64
+-- HeidiSQL Versione:            11.0.0.5919
+-- --------------------------------------------------------
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+
+
+-- Dump della struttura del database employees
+CREATE DATABASE IF NOT EXISTS `employees` /*!40100 DEFAULT CHARACTER SET latin1 */;
+USE `employees`;
+
+-- Dump della struttura di tabella employees.city
+CREATE TABLE IF NOT EXISTS `city` (
+  `cityID` int(11) NOT NULL AUTO_INCREMENT,
+  `cityName` varchar(150) NOT NULL,
+  `referenceCountry` int(11) DEFAULT NULL,
+  PRIMARY KEY (`cityID`),
+  KEY `referenceContry` (`referenceCountry`) USING BTREE,
+  CONSTRAINT `city_ibfk_1` FOREIGN KEY (`referenceCountry`) REFERENCES `country` (`contryID`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+
+-- Dump dei dati della tabella employees.city: ~14 rows (circa)
+/*!40000 ALTER TABLE `city` DISABLE KEYS */;
+INSERT INTO `city` (`cityID`, `cityName`, `referenceCountry`) VALUES
+	(1, 'Milano', 1),
+	(2, 'Padova', 1),
+	(3, 'Brest', 2),
+	(4, 'Tolosa', 2),
+	(5, 'Namcy', 2),
+	(6, 'Amburgo', 3),
+	(7, 'Stoccolma', 3),
+	(8, 'Francoforte', 3),
+	(9, 'Siviglia', 4),
+	(10, 'Valencia', 4),
+	(11, 'Bilbao', 4),
+	(12, 'Coimbra', 5),
+	(13, 'Evora', 5),
+	(14, 'Sintra', 5);
+/*!40000 ALTER TABLE `city` ENABLE KEYS */;
+
+-- Dump della struttura di tabella employees.country
+CREATE TABLE IF NOT EXISTS `country` (
+  `contryID` int(11) NOT NULL AUTO_INCREMENT,
+  `countryName` varchar(100) NOT NULL,
+  `countryAbbr` varchar(5) DEFAULT NULL,
+  `capital` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`contryID`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+-- Dump dei dati della tabella employees.country: ~5 rows (circa)
+/*!40000 ALTER TABLE `country` DISABLE KEYS */;
+INSERT INTO `country` (`contryID`, `countryName`, `countryAbbr`, `capital`) VALUES
+	(1, 'Italia', 'IT', 'Roma'),
+	(2, 'Francia', 'FR', 'Parigi'),
+	(3, 'Germania', 'GR', 'Berlino'),
+	(4, 'Spagna', 'SP', 'Madrid'),
+	(5, 'Portogallo', 'PR', 'Lisbona');
+/*!40000 ALTER TABLE `country` ENABLE KEYS */;
+
+-- Dump della struttura di tabella employees.employeesname
+CREATE TABLE IF NOT EXISTS `employeesname` (
+  `Name` varchar(50) NOT NULL DEFAULT '_____',
+  `Surname` varchar(50) NOT NULL DEFAULT '_____',
+  `Phone` varchar(50) NOT NULL DEFAULT '_____',
+  `Mansion` varchar(50) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COMMENT='Qui abbiamo tutti i dati inerenti ai nostri dipendenti';
+
+-- Dump dei dati della tabella employees.employeesname: ~0 rows (circa)
+/*!40000 ALTER TABLE `employeesname` DISABLE KEYS */;
+/*!40000 ALTER TABLE `employeesname` ENABLE KEYS */;
+
+-- Dump della struttura di tabella employees.person
+CREATE TABLE IF NOT EXISTS `person` (
+  `PersonID` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `PersonName` varchar(100) DEFAULT NULL,
+  `City` varchar(50) DEFAULT NULL,
+  `Contry` varchar(50) DEFAULT NULL,
+  `DOB` date DEFAULT NULL,
+  `Address` varchar(50) DEFAULT NULL,
+  `Salary` double(10,2) DEFAULT NULL,
+  `countryRef` int(11) DEFAULT NULL,
+  PRIMARY KEY (`PersonID`),
+  KEY `FK1_country` (`countryRef`),
+  CONSTRAINT `FK1_country` FOREIGN KEY (`countryRef`) REFERENCES `country` (`contryID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Dump dei dati della tabella employees.person: ~2 rows (circa)
+/*!40000 ALTER TABLE `person` DISABLE KEYS */;
+INSERT INTO `person` (`PersonID`, `PersonName`, `City`, `Contry`, `DOB`, `Address`, `Salary`, `countryRef`) VALUES
+	(1, 'Jessica', 'NY', 'USA', '1975-10-30', 'address1', 1200.45, 1),
+	(2, 'Luigi', 'NY', 'USA', '1987-04-07', 'address2', 1200.45, 1);
+/*!40000 ALTER TABLE `person` ENABLE KEYS */;
+
+-- Dump della struttura di tabella employees.person2
+CREATE TABLE IF NOT EXISTS `person2` (
+  `PersonID` int(11) NOT NULL AUTO_INCREMENT,
+  `Nameperson` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`PersonID`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+
+-- Dump dei dati della tabella employees.person2: ~3 rows (circa)
+/*!40000 ALTER TABLE `person2` DISABLE KEYS */;
+INSERT INTO `person2` (`PersonID`, `Nameperson`) VALUES
+	(1, 'Lala'),
+	(2, 'Nectun'),
+	(3, 'Luigi');
+/*!40000 ALTER TABLE `person2` ENABLE KEYS */;
+
+-- Dump della struttura di tabella employees.person3
+CREATE TABLE IF NOT EXISTS `person3` (
+  `PersonID` int(11) NOT NULL AUTO_INCREMENT,
+  `Nameperson` varchar(150) DEFAULT NULL,
+  PRIMARY KEY (`PersonID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Dump dei dati della tabella employees.person3: ~2 rows (circa)
+/*!40000 ALTER TABLE `person3` DISABLE KEYS */;
+INSERT INTO `person3` (`PersonID`, `Nameperson`) VALUES
+	(1, 'qqq'),
+	(2, 'bal');
+/*!40000 ALTER TABLE `person3` ENABLE KEYS */;
+
+-- Dump della struttura di tabella employees.person4
+CREATE TABLE IF NOT EXISTS `person4` (
+  `PersonID` int(11) NOT NULL AUTO_INCREMENT,
+  `PersonName` varchar(150) NOT NULL,
+  `Address` varchar(100) NOT NULL,
+  `PassportNo` varchar(100) DEFAULT NULL,
+  `Salary` decimal(10,2) DEFAULT 1250.00,
+  PRIMARY KEY (`PersonID`),
+  UNIQUE KEY `PassportNo` (`PassportNo`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+-- Dump dei dati della tabella employees.person4: ~2 rows (circa)
+/*!40000 ALTER TABLE `person4` DISABLE KEYS */;
+INSERT INTO `person4` (`PersonID`, `PersonName`, `Address`, `PassportNo`, `Salary`) VALUES
+	(1, 'Clara', 'blabla', 'A123', 1250.00),
+	(2, 'Elena', 'fd f grir er ', 'A125', 1270.87);
+/*!40000 ALTER TABLE `person4` ENABLE KEYS */;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
