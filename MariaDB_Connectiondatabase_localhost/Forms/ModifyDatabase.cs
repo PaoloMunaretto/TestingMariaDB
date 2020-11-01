@@ -12,10 +12,10 @@ namespace MariaDB
 {
     public partial class ModifyDatabase : Form
     {
-        DataGridViewConfiguration dtg = new DataGridViewConfiguration();
-        QueryDatabase qdb = new QueryDatabase();
-        ValueConstant valCost = new ValueConstant();
-               
+        readonly DataGridViewConfiguration dtg = new DataGridViewConfiguration();
+        readonly QueryDatabase qdb = new QueryDatabase();
+        readonly ValueConstant valCost = new ValueConstant();
+
         string stringConnection = "";
         string tableName; //Nome della tabella dove effettuare le modifiche
         string query;  //stringa query per la connessine
@@ -34,14 +34,14 @@ namespace MariaDB
             tableName = tableName_; //Settiamo il nome della tabella
             stringConnection = connection; //Settiamo la stringa di connessione
 
-            valueElement = valCost.values; //Elementi per query
-            setElement = valCost.set;
+            valueElement = valCost.valuesDB; //Elementi per query
+            setElement = valCost.setDB;
 
             InitializeComponent();
             dtg.SetUpDataGridViewHeaderString(dataGridTable, header);
             dtg.SetupDataGridViewHeaderColor(dataGridTable);
 
-            this.InformationtoolStripLabel.Text = labelHeaderQuery +tableName_; //Visualizziamo l'inizio della query
+            this.InformationtoolStripLabel.Text = labelHeaderQuery + tableName_; //Visualizziamo l'inizio della query
             query = labelHeaderQuery + tableName_;
 
             //Vediamo se rendere la prima colonna di sola lettura (serve per la query UPDATE)
@@ -55,14 +55,14 @@ namespace MariaDB
         private void SavetoolStripButton_Click(object sender, EventArgs e)
         {
             //Salviamo il nostro elemento
-            DialogResult res = MessageBox.Show(valCost.save, valCost.saveinfo, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+            DialogResult res = MessageBox.Show(valCost.saveQuestionMSG, valCost.sureQuestionMSG, MessageBoxButtons.YesNo, MessageBoxIcon.Information);
 
-            if (res == DialogResult.Yes && InformationtoolStripLabel.Text.Contains(valCost.insert))
+            if (res == DialogResult.Yes && InformationtoolStripLabel.Text.Contains(valCost.insertDB))
             {
                 InsertInto(); //Inseriamone uno nuovo
             }
 
-            if (res == DialogResult.Yes && InformationtoolStripLabel.Text.Contains(valCost.update))
+            if (res == DialogResult.Yes && InformationtoolStripLabel.Text.Contains(valCost.updateDB))
             {
                 UpdateTable(); //Modifichiamolo secondo il valore "ID"
             }
@@ -118,25 +118,25 @@ namespace MariaDB
         /// </summary>
         public void UpdateTable()
         {
-            string whereElement = valCost.where;
+            string whereElement = valCost.whereDB;
 
             //Componiamo la nostra query secondo nomi delle colonne e gli elementi delle celle
             for (int i = 0; i < dataGridTable.Columns.Count; i++)
             {
                 if (i == 0)
                 {
-                    query += valCost.set;
-                                       
+                    query += valCost.setDB;
+
                     whereElement += dataGridTable.Columns[i].Name.ToString() + "=";
-                    whereElement += "'" + dataGridTable.Rows[0].Cells[i].Value.ToString() + "';";                    
+                    whereElement += "'" + dataGridTable.Rows[0].Cells[i].Value.ToString() + "';";
                 }
 
                 query += dataGridTable.Columns[i].Name.ToString();
-               
+
 
                 if (dataGridTable.Rows[0].Cells[i].Value != null)
                 {
-                    query += "='"+dataGridTable.Rows[0].Cells[i].Value.ToString();                   
+                    query += "='" + dataGridTable.Rows[0].Cells[i].Value.ToString();
                 }
 
                 if (i == dataGridTable.Columns.Count - 1)
@@ -144,12 +144,12 @@ namespace MariaDB
                     query += "'";
                 }
                 else
-                { 
-                    query += "',"; 
+                {
+                    query += "',";
                 }
-                
+
             }
-            query +=  whereElement;
+            query += whereElement;
             //Metodo funziona, ma i valori inseriti devono essere corretti tra loro
             qdb.InsertElement(stringConnection, query);
 

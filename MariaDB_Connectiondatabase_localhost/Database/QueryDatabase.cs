@@ -15,7 +15,7 @@ namespace MariaDB
 {
     public class QueryDatabase
     {
-        ValueConstant valCost = new ValueConstant();
+        readonly ValueConstant valCost = new ValueConstant();
 
         /// <summary>
         /// Restituiamo tutte le tabelle presenti nel database 
@@ -55,19 +55,19 @@ namespace MariaDB
                 command.ExecuteNonQuery();
                 connection.Close();
 
-                MessageBox.Show(valCost.insertCompeted);
+                MessageBox.Show(valCost.modifyDBCompetMSG);
 
             }
             catch (Exception ex)
             { 
-                MessageBox.Show(ex.Message, valCost.error, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, valCost.errorMSG, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        public int getNewID(string connection, string tableSelected, string Column)
+        public int GetNewId(string connection, string tableSelected, string Column)
         {
             int id = 1;
-            string query = String.Format(valCost.orderDesc, tableSelected,Column);
+            string query = String.Format(valCost.orderDescDB, tableSelected,Column);
 
             DataTable table = GetValues(connection, query);
 
@@ -118,6 +118,7 @@ namespace MariaDB
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }
@@ -152,6 +153,7 @@ namespace MariaDB
             }
             catch (Exception ex)
             {
+                MessageBox.Show(ex.Message);
                 return null;
             }
         }

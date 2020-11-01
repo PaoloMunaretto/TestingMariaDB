@@ -36,25 +36,29 @@ namespace MariaDB
         //*******************************************************************************
         //   Query connection for Database MariaDB
 
-        public string readAllTable = "SHOW TABLES";
-        public string readTable = "SELECT * FROM ";
-        public string findRefCountry = "SELECT * FROM country WHERE contryID=";
-        public string orderDesc = "SELECT {0}.* FROM {0} ORDER BY {1} DESC";
-        public string values = " VALUES ";
-        public string insert = "INSERT INTO ";
-        public string update = "UPDATE ";
-        public string set = " SET ";
-        public string where = " WHERE ";
+        public string readAllTableDB = "SHOW TABLES";
+        public string readTableDB = "SELECT * FROM ";
+        public string findRefCountryDB = "SELECT * FROM country WHERE contryID=";
+        public string orderDescDB = "SELECT {0}.* FROM {0} ORDER BY {1} DESC";
+        public string valuesDB = " VALUES ";
+        public string insertDB = "INSERT INTO ";
+        public string updateDB = "UPDATE ";
+        public string setDB = " SET ";
+        public string whereDB = " WHERE ";
+        public string deleteDB = "DELETE FROM ";
 
         //*******************************************************************************
         //    MessageBox text and information
 
-        public string connectionOk = "Connection open";
-        public string titleReference = "Reference Object";
-        public string save = "SAVE INFORMATION";
-        public string saveinfo = "ARE YOU SHURE TO SAVE?";
-        public string error = "ERROR EXCEPTION";
-        public string insertCompeted = "Element load completed!";
+        public string connectionOkMSG = "Connection open";
+        public string titleReferenceMSG = "Reference Object";
+        public string errorMSG = "ERROR EXCEPTION";
+        public string modifyDBCompetMSG = "Query for database completed!";
+
+        //    MessageBox Questions
+        public string deleteQuestionMSG = "DELETE ELEMENT?";
+        public string sureQuestionMSG = "ARE YOU SHURE?";
+        public string saveQuestionMSG = "SAVE INFORMATION?";
 
     }
 }

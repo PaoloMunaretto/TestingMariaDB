@@ -14,9 +14,9 @@ namespace MariaDB
 {
     public partial class Start : Form
     {
-        DataGridViewConfiguration dataGridConfig = new DataGridViewConfiguration();
-        ValueConstant valConst = new ValueConstant();
-        QueryDatabase queryDB = new QueryDatabase();
+        readonly DataGridViewConfiguration dataGridConfig = new DataGridViewConfiguration();
+        readonly ValueConstant valConst = new ValueConstant();
+        readonly QueryDatabase queryDB = new QueryDatabase();
 
         public string stringConnection = ""; //Connettersi al database
 
@@ -29,7 +29,7 @@ namespace MariaDB
             dataGridElement.AllowUserToAddRows = false;
             panelButtons.Enabled = false;
 
-            valConst.SetTablesArray(queryDB.ReadAllTablesMariaDB(stringConnection, valConst.readAllTable));
+            valConst.SetTablesArray(queryDB.ReadAllTablesMariaDB(stringConnection, valConst.readAllTableDB));
 
             foreach (string item in valConst.arrTable)
             {
@@ -38,6 +38,11 @@ namespace MariaDB
             }
         }
 
+
+        //-----------------------------------------------------------------------------------------------------
+        //-----------------------------------------------------------------------------------------------------  Events used in this class
+        //-----------------------------------------------------------------------------------------------------
+
         /// <summary>
         /// Visualizziamo tutti gli elementi della tabella
         /// </summary>
@@ -45,7 +50,7 @@ namespace MariaDB
         /// <param name="e"></param>
         private void Connection_Click(object sender, EventArgs e)
         {
-            string query = valConst.readTable + cbTable.Text;
+            string query = valConst.readTableDB + cbTable.Text;
 
             DataTable table = queryDB.GetValues(stringConnection, query);
 
@@ -55,6 +60,96 @@ namespace MariaDB
                 panelButtons.Enabled = true;
             }
         }
+
+        /// <summary>
+        /// Prendiamo l'oggetto selezionando la riga della DataGridView
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void dataGridElement_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            // if (cbTable.Text.CompareTo("city") == 0) //city
+            {
+                try
+                {
+                    City cityObj = new City();
+                    DataRow row = (dataGridElement.SelectedRows[0].DataBoundItem as DataRowView).Row;
+                    cityObj = (City)row;
+                    MessageBox.Show(cityObj.CityName + " : " + cityObj.ReferenceContry + " - " + cityObj.Country.CountryName, valConst.titleReferenceMSG);
+                    return; //l'elemento selezionato è una città, concludiamo l'evento
+                }
+                catch (Exception ex)
+                {
+                   
+                }
+            }
+
+            // if (cbTable.Text.CompareTo("country") == 0) //contry
+            {
+                try
+                {
+                    Country contryObj = new Country();
+                    DataRow row = (dataGridElement.SelectedRows[0].DataBoundItem as DataRowView).Row;
+                    contryObj = (Country)row;
+                    MessageBox.Show(contryObj.Capital + " : " + contryObj.CountryName, valConst.titleReferenceMSG);
+                    return;//l'elemento selezionato è uno stato, chiudiamo l'evento
+                }
+                catch (Exception ex)
+                {
+                   
+                }
+            }
+        }
+
+        /// <summary>
+        /// Inseriamo un nuovo elemento nel Database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btInsert_Click(object sender, EventArgs e)
+        {
+            //Apriamo un nuovo Form per inserire un nuovo elemento
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.insertDB, stringConnection);
+            modify.ShowDialog();
+        }
+
+        /// <summary>
+        /// Visualizziamo il nuovo valore ID se vogliamo inserire un nuovo elemento
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btNewID_Click(object sender, EventArgs e)
+        {
+            //Visualizziamo il nuovo valore ID che sarà da inserire per un nuovo elemento
+            MessageBox.Show("NEW ID ELEMENT : " + queryDB.GetNewId(stringConnection, cbTable.Text, dataGridElement.Columns[0].Name).ToString(), "NEW ID");
+        }
+
+        /// <summary>
+        /// Modifichiamo un elemento nel nostro database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btModify_Click(object sender, EventArgs e)
+        {
+            //Apriamo un nuovo Form per modificare l'elemento selezionato
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.updateDB, stringConnection);
+            //modify.FirstValueReadOnly = true;
+            modify.ShowDialog();
+        }
+
+        /// <summary>
+        /// Eliminiamo un elemento dal nostro database
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btDelete_Click(object sender, EventArgs e)
+        {
+            DialogResult res = MessageBox.Show(valConst.deleteQuestionMSG, valConst.sureQuestionMSG, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            string query = valConst.deleteDB + cbTable.Text + valConst.whereDB + dataGridElement.Columns[0].Name + " ='" + dataGridElement.SelectedRows[0].Cells[0].Value.ToString() + "';";
+            queryDB.InsertElement(stringConnection, query);
+        }
+
 
         //-----------------------------------------------------------------------------------------------------
         //-----------------------------------------------------------------------------------------------------  Metod used in this class
@@ -71,67 +166,6 @@ namespace MariaDB
             source.DataSource = table;
             dataGrid.DataSource = source;
         }
-
-
-        /// <summary>
-        /// Prendiamo l'oggetto selezionando la riga della DataGridView
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void dataGridElement_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            // if (cbTable.Text.CompareTo("city") == 0) //city
-            {
-                try
-                {
-                    City cityObj = new City();
-                    DataRow row = (dataGridElement.SelectedRows[0].DataBoundItem as DataRowView).Row;
-                    cityObj = (City)row;
-                    MessageBox.Show(cityObj.CityName + " : " + cityObj.ReferenceContry + " - " + cityObj.Country.CountryName, valConst.titleReference);
-                    return; //l'elemento selezionato è una città, concludiamo l'evento
-                }
-                catch (Exception ex)
-                { }
-            }
-
-            // if (cbTable.Text.CompareTo("country") == 0) //contry
-            {
-                try
-                {
-                    Country contryObj = new Country();
-                    DataRow row = (dataGridElement.SelectedRows[0].DataBoundItem as DataRowView).Row;
-                    contryObj = (Country)row;
-                    MessageBox.Show(contryObj.Capital + " : " + contryObj.CountryName, valConst.titleReference);
-                    return;//l'elemento selezionato è uno stato, chiudiamo l'evento
-                }
-                catch (Exception ex)
-                { }
-            }
-        }
-
-        private void btInsert_Click(object sender, EventArgs e)
-        {         
-            //Apriamo un nuovo Form per inserire un nuovo elemento
-            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.insert, stringConnection);
-            modify.ShowDialog();
-        }
-
-        private void btNewID_Click(object sender, EventArgs e)
-        {
-            //Visualizziamo il nuovo valore ID che sarà da inserire per un nuovo elemento
-            MessageBox.Show("NEW ID ELEMENT : " + queryDB.getNewID(stringConnection, cbTable.Text, dataGridElement.Columns[0].Name).ToString(),"NEW ID" );
-        }
-
-        private void btModify_Click(object sender, EventArgs e)
-        {
-            //Apriamo un nuovo Form per modificare l'elemento selezionato
-            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.update, stringConnection);
-            //modify.FirstValueReadOnly = true;
-            modify.ShowDialog();
-        }
-
-
-
 
 
 
@@ -207,7 +241,7 @@ namespace MariaDB
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {
-                    MessageBox.Show(valConst.connectionOk);
+                    MessageBox.Show(valConst.connectionOkMSG);
                 }
                 sqlConnection.Close();
             }
@@ -215,6 +249,7 @@ namespace MariaDB
             {
                 MessageBox.Show(ex.ToString());
             }
-        }       
+        }
+
     }
 }

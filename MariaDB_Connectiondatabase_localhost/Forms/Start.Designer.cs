@@ -36,7 +36,7 @@
             this.btInsert = new System.Windows.Forms.Button();
             this.btNewID = new System.Windows.Forms.Button();
             this.btModify = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btDelete = new System.Windows.Forms.Button();
             this.cbTable = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridElement = new System.Windows.Forms.DataGridView();
@@ -61,7 +61,7 @@
             this.panelButtons.Controls.Add(this.btInsert);
             this.panelButtons.Controls.Add(this.btNewID);
             this.panelButtons.Controls.Add(this.btModify);
-            this.panelButtons.Controls.Add(this.button4);
+            this.panelButtons.Controls.Add(this.btDelete);
             this.panelButtons.Dock = System.Windows.Forms.DockStyle.Right;
             this.panelButtons.Location = new System.Drawing.Point(241, 0);
             this.panelButtons.Name = "panelButtons";
@@ -93,7 +93,7 @@
             // btModify
             // 
             this.btModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btModify.Location = new System.Drawing.Point(110, 47);
+            this.btModify.Location = new System.Drawing.Point(19, 91);
             this.btModify.Name = "btModify";
             this.btModify.Size = new System.Drawing.Size(85, 38);
             this.btModify.TabIndex = 3;
@@ -101,15 +101,16 @@
             this.btModify.UseVisualStyleBackColor = true;
             this.btModify.Click += new System.EventHandler(this.btModify_Click);
             // 
-            // button4
+            // btDelete
             // 
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button4.Location = new System.Drawing.Point(110, 91);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(85, 38);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "DELETE";
-            this.button4.UseVisualStyleBackColor = true;
+            this.btDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btDelete.Location = new System.Drawing.Point(110, 91);
+            this.btDelete.Name = "btDelete";
+            this.btDelete.Size = new System.Drawing.Size(85, 38);
+            this.btDelete.TabIndex = 4;
+            this.btDelete.Text = "DELETE";
+            this.btDelete.UseVisualStyleBackColor = true;
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
             // 
             // cbTable
             // 
@@ -187,7 +188,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.DataGridView dataGridElement;
         private System.Windows.Forms.ComboBox cbTable;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btDelete;
         private System.Windows.Forms.Button btModify;
         private System.Windows.Forms.Button btInsert;
         private System.Windows.Forms.Button btNewID;

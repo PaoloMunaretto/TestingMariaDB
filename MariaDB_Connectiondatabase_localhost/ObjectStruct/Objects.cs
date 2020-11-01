@@ -45,7 +45,7 @@ namespace MariaDB
 
             string stringConnection = "server=" + valConst.nameServer + ";port=" + valConst.port + ";Database=" + valConst.databaseName + ";uid=" + valConst.nameUser + ";password=" + valConst.password;
 
-            string query = valConst.findRefCountry + cityObj.ReferenceContry;
+            string query = valConst.findRefCountryDB + cityObj.ReferenceContry;
 
             cityObj.Country = queryDB.ReturnCountry(stringConnection, query);
         }
