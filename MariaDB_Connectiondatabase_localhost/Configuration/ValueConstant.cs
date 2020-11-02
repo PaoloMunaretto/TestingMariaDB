@@ -7,7 +7,12 @@ using System.Threading.Tasks;
 namespace MariaDB
 {
     public class ValueConstant
-    {   
+    {
+        //*******************************************************************************
+        //    Versioning for this software
+
+        public string versionSW = " 1.0.0";
+
         //*******************************************************************************
         //    Connection MySql.Data.MySqlClient
 
@@ -55,7 +60,7 @@ namespace MariaDB
         public string errorMSG = "ERROR EXCEPTION";
         public string modifyDBCompetMSG = "Query for database completed!";
 
-        //    MessageBox Questions
+        //    MessageBox Questions information
         public string deleteQuestionMSG = "DELETE ELEMENT?";
         public string sureQuestionMSG = "ARE YOU SHURE?";
         public string saveQuestionMSG = "SAVE INFORMATION?";

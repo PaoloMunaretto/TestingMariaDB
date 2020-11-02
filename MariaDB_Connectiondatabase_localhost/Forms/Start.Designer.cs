@@ -71,46 +71,46 @@
             // btInsert
             // 
             this.btInsert.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btInsert.Location = new System.Drawing.Point(110, 3);
+            this.btInsert.Location = new System.Drawing.Point(110, 13);
             this.btInsert.Name = "btInsert";
             this.btInsert.Size = new System.Drawing.Size(85, 38);
             this.btInsert.TabIndex = 2;
             this.btInsert.Text = "INSERT";
             this.btInsert.UseVisualStyleBackColor = true;
-            this.btInsert.Click += new System.EventHandler(this.btInsert_Click);
+            this.btInsert.Click += new System.EventHandler(this.BtInsert_Click);
             // 
             // btNewID
             // 
             this.btNewID.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btNewID.Location = new System.Drawing.Point(19, 3);
+            this.btNewID.Location = new System.Drawing.Point(19, 13);
             this.btNewID.Name = "btNewID";
             this.btNewID.Size = new System.Drawing.Size(85, 38);
             this.btNewID.TabIndex = 5;
             this.btNewID.Text = "NEW ID";
             this.btNewID.UseVisualStyleBackColor = true;
-            this.btNewID.Click += new System.EventHandler(this.btNewID_Click);
+            this.btNewID.Click += new System.EventHandler(this.BtNewID_Click);
             // 
             // btModify
             // 
             this.btModify.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btModify.Location = new System.Drawing.Point(19, 91);
+            this.btModify.Location = new System.Drawing.Point(19, 86);
             this.btModify.Name = "btModify";
             this.btModify.Size = new System.Drawing.Size(85, 38);
             this.btModify.TabIndex = 3;
             this.btModify.Text = "MODIFY";
             this.btModify.UseVisualStyleBackColor = true;
-            this.btModify.Click += new System.EventHandler(this.btModify_Click);
+            this.btModify.Click += new System.EventHandler(this.BtModify_Click);
             // 
             // btDelete
             // 
             this.btDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btDelete.Location = new System.Drawing.Point(110, 91);
+            this.btDelete.Location = new System.Drawing.Point(110, 86);
             this.btDelete.Name = "btDelete";
             this.btDelete.Size = new System.Drawing.Size(85, 38);
             this.btDelete.TabIndex = 4;
             this.btDelete.Text = "DELETE";
             this.btDelete.UseVisualStyleBackColor = true;
-            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
+            this.btDelete.Click += new System.EventHandler(this.BtDelete_Click);
             // 
             // cbTable
             // 
@@ -118,7 +118,7 @@
             this.cbTable.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             this.cbTable.ForeColor = System.Drawing.Color.White;
             this.cbTable.FormattingEnabled = true;
-            this.cbTable.Location = new System.Drawing.Point(13, 77);
+            this.cbTable.Location = new System.Drawing.Point(12, 96);
             this.cbTable.Name = "cbTable";
             this.cbTable.Size = new System.Drawing.Size(222, 28);
             this.cbTable.TabIndex = 1;
@@ -161,7 +161,7 @@
             this.dataGridElement.RowTemplate.Height = 24;
             this.dataGridElement.Size = new System.Drawing.Size(800, 295);
             this.dataGridElement.TabIndex = 1;
-            this.dataGridElement.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridElement_CellClick);
+            this.dataGridElement.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridElement_CellClick);
             // 
             // Start
             // 

@@ -14,7 +14,6 @@ namespace MariaDB
 {
     public partial class Start : Form
     {
-        readonly DataGridViewConfiguration dataGridConfig = new DataGridViewConfiguration();
         readonly ValueConstant valConst = new ValueConstant();
         readonly QueryDatabase queryDB = new QueryDatabase();
 
@@ -24,10 +23,14 @@ namespace MariaDB
         public Start()
         {
             InitializeComponent();
-            stringConnection = "server=" + valConst.nameServer + ";port=" + valConst.port + ";Database=" + valConst.databaseName + ";uid=" + valConst.nameUser + ";password=" + valConst.password;
+
+            // "server=" + valConst.nameServer + ";port=" + valConst.port + ";Database=" + valConst.databaseName + ";uid=" + valConst.nameUser + ";password=" + valConst.password;
+            stringConnection = String.Format( "server= {0}; port= {1}; Database= {2}; uid={3}; password={4}", valConst.nameServer, valConst.port, valConst.databaseName, valConst.nameUser, valConst.password );
 
             dataGridElement.AllowUserToAddRows = false;
             panelButtons.Enabled = false;
+
+            this.Text += valConst.versionSW;
 
             valConst.SetTablesArray(queryDB.ReadAllTablesMariaDB(stringConnection, valConst.readAllTableDB));
 
@@ -66,7 +69,7 @@ namespace MariaDB
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void dataGridElement_CellClick(object sender, DataGridViewCellEventArgs e)
+        private void DataGridElement_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             // if (cbTable.Text.CompareTo("city") == 0) //city
             {
@@ -78,10 +81,8 @@ namespace MariaDB
                     MessageBox.Show(cityObj.CityName + " : " + cityObj.ReferenceContry + " - " + cityObj.Country.CountryName, valConst.titleReferenceMSG);
                     return; //l'elemento selezionato è una città, concludiamo l'evento
                 }
-                catch (Exception ex)
-                {
-                   
-                }
+                catch (Exception )
+                {  }
             }
 
             // if (cbTable.Text.CompareTo("country") == 0) //contry
@@ -94,10 +95,8 @@ namespace MariaDB
                     MessageBox.Show(contryObj.Capital + " : " + contryObj.CountryName, valConst.titleReferenceMSG);
                     return;//l'elemento selezionato è uno stato, chiudiamo l'evento
                 }
-                catch (Exception ex)
-                {
-                   
-                }
+                catch (Exception )
+                {  }
             }
         }
 
@@ -106,7 +105,7 @@ namespace MariaDB
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btInsert_Click(object sender, EventArgs e)
+        private void BtInsert_Click(object sender, EventArgs e)
         {
             //Apriamo un nuovo Form per inserire un nuovo elemento
             ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.insertDB, stringConnection);
@@ -118,7 +117,7 @@ namespace MariaDB
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btNewID_Click(object sender, EventArgs e)
+        private void BtNewID_Click(object sender, EventArgs e)
         {
             //Visualizziamo il nuovo valore ID che sarà da inserire per un nuovo elemento
             MessageBox.Show("NEW ID ELEMENT : " + queryDB.GetNewId(stringConnection, cbTable.Text, dataGridElement.Columns[0].Name).ToString(), "NEW ID");
@@ -129,7 +128,7 @@ namespace MariaDB
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btModify_Click(object sender, EventArgs e)
+        private void BtModify_Click(object sender, EventArgs e)
         {
             //Apriamo un nuovo Form per modificare l'elemento selezionato
             ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.updateDB, stringConnection);
@@ -142,12 +141,14 @@ namespace MariaDB
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void btDelete_Click(object sender, EventArgs e)
+        private void BtDelete_Click(object sender, EventArgs e)
         {
             DialogResult res = MessageBox.Show(valConst.deleteQuestionMSG, valConst.sureQuestionMSG, MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-
-            string query = valConst.deleteDB + cbTable.Text + valConst.whereDB + dataGridElement.Columns[0].Name + " ='" + dataGridElement.SelectedRows[0].Cells[0].Value.ToString() + "';";
-            queryDB.InsertElement(stringConnection, query);
+            if (res == DialogResult.Yes)
+            {
+                string query = valConst.deleteDB + cbTable.Text + valConst.whereDB + dataGridElement.Columns[0].Name + " ='" + dataGridElement.SelectedRows[0].Cells[0].Value.ToString() + "';";
+                queryDB.InsertElement(stringConnection, query);
+            }
         }
 
 
@@ -162,8 +163,7 @@ namespace MariaDB
         /// <param name="table"></param>
         public void SetTableInDataGrid(DataGridView dataGrid, DataTable table)
         {
-            BindingSource source = new BindingSource();
-            source.DataSource = table;
+            BindingSource source = new BindingSource  { DataSource = table   };
             dataGrid.DataSource = source;
         }
 
@@ -198,7 +198,7 @@ namespace MariaDB
         /// <summary>
         /// Visualizziamo una specifica colonna della tabella di un database
         /// </summary>
-        public void showTable()
+        public void ShowTable()
         {
             MySqlConnection sqlConnection = new MySqlConnection(stringConnection);
             MySqlCommand sqlCommand = sqlConnection.CreateCommand();
@@ -225,7 +225,7 @@ namespace MariaDB
         /// <summary>
         /// Verifichiamo che la connessione sia possibile con la tabella del database
         /// </summary>
-        public void verifyConnectionDatabase()
+        public void VerifyConnectionDatabase()
         {
 
             //connectionString ="Server=____________;Port=__________;Database=_______;Uid=____________;password=______;"
