@@ -27,11 +27,12 @@ namespace MariaDB
 
         public static explicit operator City(DataRow dr)
         {
-            City cityObj = new City();     
-
-            cityObj.CityID = Int32.Parse(dr.ItemArray[0].ToString());
-            cityObj.CityName = dr.ItemArray[1].ToString();
-            cityObj.ReferenceContry = Int32.Parse(dr.ItemArray[2].ToString());
+            City cityObj = new City
+            {
+                CityID = Int32.Parse(dr.ItemArray[0].ToString()),
+                CityName = dr.ItemArray[1].ToString(),
+                ReferenceContry = Int32.Parse(dr.ItemArray[2].ToString())
+            };
 
             cityObj.SetCountry(cityObj);
 
@@ -71,12 +72,13 @@ namespace MariaDB
 
         public static explicit operator Country(DataRow dr)
         {
-            Country countryObj = new Country();
-
-            countryObj.ContryID = Int32.Parse(dr.ItemArray[0].ToString());
-            countryObj.CountryName = dr.ItemArray[1].ToString();
-            countryObj.CountryAbbr = dr.ItemArray[2].ToString();
-            countryObj.Capital =  dr.ItemArray[3].ToString();
+            Country countryObj = new Country
+            {
+                ContryID = Int32.Parse(dr.ItemArray[0].ToString()),
+                CountryName = dr.ItemArray[1].ToString(),
+                CountryAbbr = dr.ItemArray[2].ToString(),
+                Capital = dr.ItemArray[3].ToString()
+            };
 
             return countryObj;
         }

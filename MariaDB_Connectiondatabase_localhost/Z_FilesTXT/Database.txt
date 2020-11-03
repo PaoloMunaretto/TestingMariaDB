@@ -18,17 +18,17 @@ USE `employees`;
 
 -- Dump della struttura di tabella employees.city
 CREATE TABLE IF NOT EXISTS `city` (
-  `cityID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `cityName` varchar(150) NOT NULL,
   `referenceCountry` int(11) DEFAULT NULL,
-  PRIMARY KEY (`cityID`),
+  PRIMARY KEY (`ID`),
   KEY `referenceContry` (`referenceCountry`) USING BTREE,
-  CONSTRAINT `city_ibfk_1` FOREIGN KEY (`referenceCountry`) REFERENCES `country` (`contryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+  CONSTRAINT `city_ibfk_1` FOREIGN KEY (`referenceCountry`) REFERENCES `country` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 -- Dump dei dati della tabella employees.city: ~14 rows (circa)
 /*!40000 ALTER TABLE `city` DISABLE KEYS */;
-INSERT INTO `city` (`cityID`, `cityName`, `referenceCountry`) VALUES
+INSERT INTO `city` (`ID`, `cityName`, `referenceCountry`) VALUES
 	(1, 'Milano', 1),
 	(2, 'Padova', 1),
 	(3, 'Brest', 2),
@@ -42,26 +42,28 @@ INSERT INTO `city` (`cityID`, `cityName`, `referenceCountry`) VALUES
 	(11, 'Bilbao', 4),
 	(12, 'Coimbra', 5),
 	(13, 'Evora', 5),
-	(14, 'Sintra', 5);
+	(14, 'Sintra', 5),
+	(15, 'BLA BLA', 6);
 /*!40000 ALTER TABLE `city` ENABLE KEYS */;
 
 -- Dump della struttura di tabella employees.country
 CREATE TABLE IF NOT EXISTS `country` (
-  `contryID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `countryName` varchar(100) NOT NULL,
   `countryAbbr` varchar(5) DEFAULT NULL,
   `capital` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`contryID`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 -- Dump dei dati della tabella employees.country: ~5 rows (circa)
 /*!40000 ALTER TABLE `country` DISABLE KEYS */;
-INSERT INTO `country` (`contryID`, `countryName`, `countryAbbr`, `capital`) VALUES
+INSERT INTO `country` (`ID`, `countryName`, `countryAbbr`, `capital`) VALUES
 	(1, 'Italia', 'IT', 'Roma'),
 	(2, 'Francia', 'FR', 'Parigi'),
 	(3, 'Germania', 'GR', 'Berlino'),
 	(4, 'Spagna', 'SP', 'Madrid'),
-	(5, 'Portogallo', 'PR', 'Lisbona');
+	(5, 'Portogallo', 'PR', 'Lisbona'),
+	(6, 'BLA 1 ', 'BLA 2', 'BLA 3');
 /*!40000 ALTER TABLE `country` ENABLE KEYS */;
 
 -- Dump della struttura di tabella employees.employeesname
@@ -78,7 +80,7 @@ CREATE TABLE IF NOT EXISTS `employeesname` (
 
 -- Dump della struttura di tabella employees.person
 CREATE TABLE IF NOT EXISTS `person` (
-  `PersonID` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `ID` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `PersonName` varchar(100) DEFAULT NULL,
   `City` varchar(50) DEFAULT NULL,
   `Contry` varchar(50) DEFAULT NULL,
@@ -86,28 +88,28 @@ CREATE TABLE IF NOT EXISTS `person` (
   `Address` varchar(50) DEFAULT NULL,
   `Salary` double(10,2) DEFAULT NULL,
   `countryRef` int(11) DEFAULT NULL,
-  PRIMARY KEY (`PersonID`),
+  PRIMARY KEY (`ID`),
   KEY `FK1_country` (`countryRef`),
-  CONSTRAINT `FK1_country` FOREIGN KEY (`countryRef`) REFERENCES `country` (`contryID`)
+  CONSTRAINT `FK1_country` FOREIGN KEY (`countryRef`) REFERENCES `country` (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dump dei dati della tabella employees.person: ~2 rows (circa)
 /*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` (`PersonID`, `PersonName`, `City`, `Contry`, `DOB`, `Address`, `Salary`, `countryRef`) VALUES
+INSERT INTO `person` (`ID`, `PersonName`, `City`, `Contry`, `DOB`, `Address`, `Salary`, `countryRef`) VALUES
 	(1, 'Jessica', 'NY', 'USA', '1975-10-30', 'address1', 1200.45, 1),
 	(2, 'Luigi', 'NY', 'USA', '1987-04-07', 'address2', 1200.45, 1);
 /*!40000 ALTER TABLE `person` ENABLE KEYS */;
 
 -- Dump della struttura di tabella employees.person2
 CREATE TABLE IF NOT EXISTS `person2` (
-  `PersonID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Nameperson` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`PersonID`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Dump dei dati della tabella employees.person2: ~3 rows (circa)
 /*!40000 ALTER TABLE `person2` DISABLE KEYS */;
-INSERT INTO `person2` (`PersonID`, `Nameperson`) VALUES
+INSERT INTO `person2` (`ID`, `Nameperson`) VALUES
 	(1, 'Lala'),
 	(2, 'Nectun'),
 	(3, 'Luigi');
@@ -115,32 +117,32 @@ INSERT INTO `person2` (`PersonID`, `Nameperson`) VALUES
 
 -- Dump della struttura di tabella employees.person3
 CREATE TABLE IF NOT EXISTS `person3` (
-  `PersonID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Nameperson` varchar(150) DEFAULT NULL,
-  PRIMARY KEY (`PersonID`)
+  PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dump dei dati della tabella employees.person3: ~2 rows (circa)
 /*!40000 ALTER TABLE `person3` DISABLE KEYS */;
-INSERT INTO `person3` (`PersonID`, `Nameperson`) VALUES
+INSERT INTO `person3` (`ID`, `Nameperson`) VALUES
 	(1, 'qqq'),
 	(2, 'bal');
 /*!40000 ALTER TABLE `person3` ENABLE KEYS */;
 
 -- Dump della struttura di tabella employees.person4
 CREATE TABLE IF NOT EXISTS `person4` (
-  `PersonID` int(11) NOT NULL AUTO_INCREMENT,
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
   `PersonName` varchar(150) NOT NULL,
   `Address` varchar(100) NOT NULL,
   `PassportNo` varchar(100) DEFAULT NULL,
   `Salary` decimal(10,2) DEFAULT 1250.00,
-  PRIMARY KEY (`PersonID`),
+  PRIMARY KEY (`ID`),
   UNIQUE KEY `PassportNo` (`PassportNo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- Dump dei dati della tabella employees.person4: ~2 rows (circa)
 /*!40000 ALTER TABLE `person4` DISABLE KEYS */;
-INSERT INTO `person4` (`PersonID`, `PersonName`, `Address`, `PassportNo`, `Salary`) VALUES
+INSERT INTO `person4` (`ID`, `PersonName`, `Address`, `PassportNo`, `Salary`) VALUES
 	(1, 'Clara', 'blabla', 'A123', 1250.00),
 	(2, 'Elena', 'fd f grir er ', 'A125', 1270.87);
 /*!40000 ALTER TABLE `person4` ENABLE KEYS */;

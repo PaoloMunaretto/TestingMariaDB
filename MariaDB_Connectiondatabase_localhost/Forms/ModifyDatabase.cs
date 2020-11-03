@@ -16,26 +16,26 @@ namespace MariaDB
         readonly QueryDatabase qdb = new QueryDatabase();
         readonly ValueConstant valCost = new ValueConstant();
 
-        string stringConnection = "";
-        string tableName; //Nome della tabella dove effettuare le modifiche
+        readonly string stringConnection = "";       
         string query;  //stringa query per la connessine
         string valueElement;
-        string setElement;
+        
 
 
         int idUpdate;
         bool firstValueReadOnly = false;
+        readonly string IdElement;
 
         public bool FirstValueReadOnly { get => firstValueReadOnly; set => firstValueReadOnly = value; }
         public int IdUpdate { get => idUpdate; set => idUpdate = value; }
 
-        public ModifyDatabase(string tableName_, string header, string labelHeaderQuery, string connection)
-        {
-            tableName = tableName_; //Settiamo il nome della tabella
-            stringConnection = connection; //Settiamo la stringa di connessione
 
+        public ModifyDatabase(string tableName_, string header, string labelHeaderQuery, string connection, string IdElement_)
+        {
+            this.IdElement = IdElement_; //Value ID dell'elemento           
+            this.stringConnection = connection; //Settiamo la stringa di connessione
             valueElement = valCost.valuesDB; //Elementi per query
-            setElement = valCost.setDB;
+        
 
             InitializeComponent();
             dtg.SetUpDataGridViewHeaderString(dataGridTable, header);
@@ -127,8 +127,8 @@ namespace MariaDB
                 {
                     query += valCost.setDB;
 
-                    whereElement += dataGridTable.Columns[i].Name.ToString() + "=";
-                    whereElement += "'" + dataGridTable.Rows[0].Cells[i].Value.ToString() + "';";
+                    whereElement += valCost.IdDB + "=";
+                    whereElement += "'" + IdElement/*dataGridTable.Rows[0].Cells[i].Value.ToString()*/ + "';";
                 }
 
                 query += dataGridTable.Columns[i].Name.ToString();

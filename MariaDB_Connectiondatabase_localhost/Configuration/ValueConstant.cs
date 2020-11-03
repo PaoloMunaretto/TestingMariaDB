@@ -43,13 +43,14 @@ namespace MariaDB
 
         public string readAllTableDB = "SHOW TABLES";
         public string readTableDB = "SELECT * FROM ";
-        public string findRefCountryDB = "SELECT * FROM country WHERE contryID=";
+        public string findRefCountryDB = "SELECT * FROM country WHERE ID=";
         public string orderDescDB = "SELECT {0}.* FROM {0} ORDER BY {1} DESC";
         public string valuesDB = " VALUES ";
         public string insertDB = "INSERT INTO ";
         public string updateDB = "UPDATE ";
         public string setDB = " SET ";
         public string whereDB = " WHERE ";
+        public string IdDB = "ID";
         public string deleteDB = "DELETE FROM ";
 
         //*******************************************************************************

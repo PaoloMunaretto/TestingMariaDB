@@ -25,9 +25,11 @@ namespace MariaDB
             InitializeComponent();
 
             // "server=" + valConst.nameServer + ";port=" + valConst.port + ";Database=" + valConst.databaseName + ";uid=" + valConst.nameUser + ";password=" + valConst.password;
-            stringConnection = String.Format( "server= {0}; port= {1}; Database= {2}; uid={3}; password={4}", valConst.nameServer, valConst.port, valConst.databaseName, valConst.nameUser, valConst.password );
+            stringConnection = String.Format("server= {0}; port= {1}; Database= {2}; uid={3}; password={4}", valConst.nameServer, valConst.port, valConst.databaseName, valConst.nameUser, valConst.password);
 
             dataGridElement.AllowUserToAddRows = false;
+            dataGridElement.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+
             panelButtons.Enabled = false;
 
             this.Text += valConst.versionSW;
@@ -64,6 +66,11 @@ namespace MariaDB
             }
         }
 
+        private void BtShow_Click(object sender, EventArgs e)
+        {
+            SetElement(true);
+        }
+
         /// <summary>
         /// Prendiamo l'oggetto selezionando la riga della DataGridView
         /// </summary>
@@ -71,33 +78,7 @@ namespace MariaDB
         /// <param name="e"></param>
         private void DataGridElement_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            // if (cbTable.Text.CompareTo("city") == 0) //city
-            {
-                try
-                {
-                    City cityObj = new City();
-                    DataRow row = (dataGridElement.SelectedRows[0].DataBoundItem as DataRowView).Row;
-                    cityObj = (City)row;
-                    MessageBox.Show(cityObj.CityName + " : " + cityObj.ReferenceContry + " - " + cityObj.Country.CountryName, valConst.titleReferenceMSG);
-                    return; //l'elemento selezionato è una città, concludiamo l'evento
-                }
-                catch (Exception )
-                {  }
-            }
-
-            // if (cbTable.Text.CompareTo("country") == 0) //contry
-            {
-                try
-                {
-                    Country contryObj = new Country();
-                    DataRow row = (dataGridElement.SelectedRows[0].DataBoundItem as DataRowView).Row;
-                    contryObj = (Country)row;
-                    MessageBox.Show(contryObj.Capital + " : " + contryObj.CountryName, valConst.titleReferenceMSG);
-                    return;//l'elemento selezionato è uno stato, chiudiamo l'evento
-                }
-                catch (Exception )
-                {  }
-            }
+            SetElement(false);
         }
 
         /// <summary>
@@ -108,7 +89,7 @@ namespace MariaDB
         private void BtInsert_Click(object sender, EventArgs e)
         {
             //Apriamo un nuovo Form per inserire un nuovo elemento
-            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.insertDB, stringConnection);
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.insertDB, stringConnection, null);
             modify.ShowDialog();
         }
 
@@ -131,7 +112,7 @@ namespace MariaDB
         private void BtModify_Click(object sender, EventArgs e)
         {
             //Apriamo un nuovo Form per modificare l'elemento selezionato
-            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.updateDB, stringConnection);
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.updateDB, stringConnection, dataGridElement.SelectedRows[0].Cells[0].Value.ToString());
             //modify.FirstValueReadOnly = true;
             modify.ShowDialog();
         }
@@ -163,8 +144,49 @@ namespace MariaDB
         /// <param name="table"></param>
         public void SetTableInDataGrid(DataGridView dataGrid, DataTable table)
         {
-            BindingSource source = new BindingSource  { DataSource = table   };
+            BindingSource source = new BindingSource { DataSource = table };
             dataGrid.DataSource = source;
+        }
+
+        /// <summary>
+        /// Settiamo il tipo di elemento City / Country e visualizziamo l'elemento
+        /// </summary>
+        /// <param name="ShowMex">Devidiamo se visualizzare o no la MessageBox con l'elemento</param>
+        public void SetElement(bool ShowMex)
+        {
+            // if (cbTable.Text.CompareTo("city") == 0) //city
+            {
+                try
+                {
+                    City cityObj = new City();
+                    DataRow row = (dataGridElement.SelectedRows[0].DataBoundItem as DataRowView).Row;
+                    cityObj = (City)row;
+                    if (ShowMex)
+                    {
+                        MessageBox.Show(cityObj.CityName + " : " + cityObj.ReferenceContry + " - " + cityObj.Country.CountryName, valConst.titleReferenceMSG);
+                    }
+                    return; //l'elemento selezionato è una città, concludiamo l'evento
+                }
+                catch (Exception)
+                { }
+            }
+
+            // if (cbTable.Text.CompareTo("country") == 0) //contry
+            {
+                try
+                {
+                    Country contryObj = new Country();
+                    DataRow row = (dataGridElement.SelectedRows[0].DataBoundItem as DataRowView).Row;
+                    contryObj = (Country)row;
+                    if (ShowMex)
+                    {
+                        MessageBox.Show(contryObj.Capital + " : " + contryObj.CountryName, valConst.titleReferenceMSG);
+                    }
+                    return;//l'elemento selezionato è uno stato, chiudiamo l'evento
+                }
+                catch (Exception)
+                { }
+            }
         }
 
 
@@ -183,12 +205,19 @@ namespace MariaDB
             StringBuilder st = new StringBuilder();
             for (int i = 0; i < dataGrid.Columns.Count; i++)
             {
-                //Otteniamo il nome della colonna ed il valore del tipo di elemento 
-                st.Append(dataGrid.Columns[i].Name /*+" " + dataGrid.Columns[i].ValueType.ToString().Replace("System", "")*/);
-
-                if (i < dataGrid.Columns.Count - 1)
+                if (dataGrid.Columns[i].Name.CompareTo("ID") != 0)
                 {
-                    st.Append(",");
+                    //Otteniamo il nome della colonna ed il valore del tipo di elemento 
+                    st.Append(dataGrid.Columns[i].Name /*+" " + dataGrid.Columns[i].ValueType.ToString().Replace("System", "")*/);
+
+                    if (i < dataGrid.Columns.Count - 1)
+                    {
+                        st.Append(",");
+                    }
+                }
+                else
+                {
+                    //Non inseriamo la colonna ID
                 }
             }
             //MessageBox.Show(st.ToString());
@@ -250,6 +279,7 @@ namespace MariaDB
                 MessageBox.Show(ex.ToString());
             }
         }
+
 
     }
 }

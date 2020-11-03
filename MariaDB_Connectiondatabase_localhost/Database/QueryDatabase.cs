@@ -15,7 +15,10 @@ namespace MariaDB
 {
     public class QueryDatabase
     {
-        readonly ValueConstant valCost = new ValueConstant();
+        readonly ValueConstant valCost = new ValueConstant();      
+
+
+
 
         /// <summary>
         /// Restituiamo tutte le tabelle presenti nel database 
@@ -45,8 +48,8 @@ namespace MariaDB
             return row;
         }
 
-        public void InsertElement(string stringConnection, string query)
-        {
+        public void InsertElement(string stringConnection, string query )
+        {            
             try
             {
                 MySqlConnection connection = new MySqlConnection(stringConnection);

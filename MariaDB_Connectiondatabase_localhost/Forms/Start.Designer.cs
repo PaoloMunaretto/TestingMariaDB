@@ -40,6 +40,7 @@
             this.cbTable = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridElement = new System.Windows.Forms.DataGridView();
+            this.btShow = new System.Windows.Forms.Button();
             this.panelIntestazione.SuspendLayout();
             this.panelButtons.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridElement)).BeginInit();
@@ -58,6 +59,7 @@
             // 
             // panelButtons
             // 
+            this.panelButtons.Controls.Add(this.btShow);
             this.panelButtons.Controls.Add(this.btInsert);
             this.panelButtons.Controls.Add(this.btNewID);
             this.panelButtons.Controls.Add(this.btModify);
@@ -163,6 +165,17 @@
             this.dataGridElement.TabIndex = 1;
             this.dataGridElement.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.DataGridElement_CellClick);
             // 
+            // btShow
+            // 
+            this.btShow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btShow.Location = new System.Drawing.Point(221, 40);
+            this.btShow.Name = "btShow";
+            this.btShow.Size = new System.Drawing.Size(91, 63);
+            this.btShow.TabIndex = 6;
+            this.btShow.Text = "SHOW ELEM";
+            this.btShow.UseVisualStyleBackColor = true;
+            this.btShow.Click += new System.EventHandler(this.BtShow_Click);
+            // 
             // Start
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -193,6 +206,7 @@
         private System.Windows.Forms.Button btInsert;
         private System.Windows.Forms.Button btNewID;
         private System.Windows.Forms.Panel panelButtons;
+        private System.Windows.Forms.Button btShow;
     }
 }
 
