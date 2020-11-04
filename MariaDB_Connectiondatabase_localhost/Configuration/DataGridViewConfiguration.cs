@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace MariaDB
@@ -42,6 +37,17 @@ namespace MariaDB
 
             dataGrid.AllowUserToAddRows = false;
             dataGrid.Rows.Add();
+        }
+
+        /// <summary>
+        /// Settiamo la struttura delle proprietà della dataGridView
+        /// </summary>
+        /// <param name="dataGridElement"></param>
+        public void SetDataGrid(DataGridView dataGridElement)
+        {
+            dataGridElement.AllowUserToAddRows = false;
+            dataGridElement.ReadOnly = true;
+            dataGridElement.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
         }
     }
 }

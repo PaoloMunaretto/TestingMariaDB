@@ -1,21 +1,13 @@
 ﻿using MySql.Data.MySqlClient;
-using Org.BouncyCastle.Asn1;
-using Org.BouncyCastle.Security.Certificates;
 using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Data.OleDb;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MariaDB
 {
     public class QueryDatabase
     {
-        readonly ValueConstant valCost = new ValueConstant();      
+        readonly ValueConstant valCost = new ValueConstant();
 
 
 
@@ -48,8 +40,8 @@ namespace MariaDB
             return row;
         }
 
-        public void InsertElement(string stringConnection, string query )
-        {            
+        public void InsertElement(string stringConnection, string query)
+        {
             try
             {
                 MySqlConnection connection = new MySqlConnection(stringConnection);
@@ -62,7 +54,7 @@ namespace MariaDB
 
             }
             catch (Exception ex)
-            { 
+            {
                 MessageBox.Show(ex.Message, valCost.errorMSG, MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -70,13 +62,13 @@ namespace MariaDB
         public int GetNewId(string connection, string tableSelected, string Column)
         {
             int id = 1;
-            string query = String.Format(valCost.orderDescDB, tableSelected,Column);
+            string query = String.Format(valCost.orderDescDB, tableSelected, Column);
 
             DataTable table = GetValues(connection, query);
 
             if (table.Rows.Count != 0)
             {
-                id = (int)table.Rows[0][0] +1;
+                id = (int)table.Rows[0][0] + 1;
             }
 
             return id;

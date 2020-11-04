@@ -1,46 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Data;
-using System.Drawing;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using SqlServerConnections;
-using MySql.Data.MySqlClient;
 
 namespace MariaDB
 {
+    
     public partial class Start : Form
     {
+        readonly DataGridViewConfiguration dataGridConfig = new DataGridViewConfiguration();
         readonly ValueConstant valConst = new ValueConstant();
         readonly QueryDatabase queryDB = new QueryDatabase();
-
-        public string stringConnection = ""; //Connettersi al database
-
 
         public Start()
         {
             InitializeComponent();
 
             // "server=" + valConst.nameServer + ";port=" + valConst.port + ";Database=" + valConst.databaseName + ";uid=" + valConst.nameUser + ";password=" + valConst.password;
-            stringConnection = String.Format("server= {0}; port= {1}; Database= {2}; uid={3}; password={4}", valConst.nameServer, valConst.port, valConst.databaseName, valConst.nameUser, valConst.password);
+            CONSTANTS.stringConnection = String.Format("server= {0}; port= {1}; Database= {2}; uid={3}; password={4}", CONSTANTS.NAME_SERVER, CONSTANTS.PORT, CONSTANTS.DATABASE_NAME, CONSTANTS.NAME_USER, CONSTANTS.PASSWORD);
 
-            dataGridElement.AllowUserToAddRows = false;
-            dataGridElement.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridConfig.SetDataGrid(dataGridElement);
 
-            panelButtons.Enabled = false;
-
-            this.Text += valConst.versionSW;
-
-            valConst.SetTablesArray(queryDB.ReadAllTablesMariaDB(stringConnection, valConst.readAllTableDB));
+            valConst.SetTablesArray(queryDB.ReadAllTablesMariaDB(CONSTANTS.stringConnection, valConst.readAllTableDB));
 
             foreach (string item in valConst.arrTable)
             {
                 if (item.Length > 2)
                     cbTable.Items.Add(item);
             }
+
+            panelButtons.Enabled = false;
+            this.Text += CONSTANTS.VERSION_SW;
         }
 
 
@@ -57,7 +48,7 @@ namespace MariaDB
         {
             string query = valConst.readTableDB + cbTable.Text;
 
-            DataTable table = queryDB.GetValues(stringConnection, query);
+            DataTable table = queryDB.GetValues(CONSTANTS.stringConnection, query);
 
             SetTableInDataGrid(dataGridElement, table);
             if (cbTable.Text.Length > 1)
@@ -89,7 +80,7 @@ namespace MariaDB
         private void BtInsert_Click(object sender, EventArgs e)
         {
             //Apriamo un nuovo Form per inserire un nuovo elemento
-            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.insertDB, stringConnection, null);
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.insertDB, CONSTANTS.stringConnection, null);
             modify.ShowDialog();
         }
 
@@ -101,7 +92,7 @@ namespace MariaDB
         private void BtNewID_Click(object sender, EventArgs e)
         {
             //Visualizziamo il nuovo valore ID che sarà da inserire per un nuovo elemento
-            MessageBox.Show("NEW ID ELEMENT : " + queryDB.GetNewId(stringConnection, cbTable.Text, dataGridElement.Columns[0].Name).ToString(), "NEW ID");
+            MessageBox.Show("NEW ID ELEMENT : " + queryDB.GetNewId(CONSTANTS.stringConnection, cbTable.Text, dataGridElement.Columns[0].Name).ToString(), "NEW ID");
         }
 
         /// <summary>
@@ -112,7 +103,7 @@ namespace MariaDB
         private void BtModify_Click(object sender, EventArgs e)
         {
             //Apriamo un nuovo Form per modificare l'elemento selezionato
-            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.updateDB, stringConnection, dataGridElement.SelectedRows[0].Cells[0].Value.ToString());
+            ModifyDatabase modify = new ModifyDatabase(cbTable.Text, GetNameAndTypeColum(dataGridElement), valConst.updateDB, CONSTANTS.stringConnection, dataGridElement.SelectedRows[0].Cells[0].Value.ToString());
             //modify.FirstValueReadOnly = true;
             modify.ShowDialog();
         }
@@ -128,7 +119,7 @@ namespace MariaDB
             if (res == DialogResult.Yes)
             {
                 string query = valConst.deleteDB + cbTable.Text + valConst.whereDB + dataGridElement.Columns[0].Name + " ='" + dataGridElement.SelectedRows[0].Cells[0].Value.ToString() + "';";
-                queryDB.InsertElement(stringConnection, query);
+                queryDB.InsertElement(CONSTANTS.stringConnection, query);
             }
         }
 
@@ -229,7 +220,7 @@ namespace MariaDB
         /// </summary>
         public void ShowTable()
         {
-            MySqlConnection sqlConnection = new MySqlConnection(stringConnection);
+            MySqlConnection sqlConnection = new MySqlConnection(CONSTANTS.stringConnection);
             MySqlCommand sqlCommand = sqlConnection.CreateCommand();
 
             sqlCommand.CommandText = "SELECT * FROM " + cbTable.Text;
@@ -266,7 +257,7 @@ namespace MariaDB
                 sqlConnect = new MySqlConnection();
                 sqlConnect.ConnectionString = stringConnection;
                 */
-                MySqlConnection sqlConnection = new MySqlConnection(stringConnection);
+                MySqlConnection sqlConnection = new MySqlConnection(CONSTANTS.stringConnection);
                 sqlConnection.Open();
                 if (sqlConnection.State == ConnectionState.Open)
                 {

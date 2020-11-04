@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MariaDB
 {
@@ -44,14 +39,12 @@ namespace MariaDB
             ValueConstant valConst = new ValueConstant();
             QueryDatabase queryDB = new QueryDatabase();
 
-            string stringConnection = "server=" + valConst.nameServer + ";port=" + valConst.port + ";Database=" + valConst.databaseName + ";uid=" + valConst.nameUser + ";password=" + valConst.password;
-
             string query = valConst.findRefCountryDB + cityObj.ReferenceContry;
 
-            cityObj.Country = queryDB.ReturnCountry(stringConnection, query);
+            cityObj.Country = queryDB.ReturnCountry(CONSTANTS.stringConnection, query);
         }
 
-       
+
     }
 
     /// <summary>

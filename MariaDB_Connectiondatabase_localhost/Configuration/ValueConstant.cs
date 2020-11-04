@@ -1,38 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MariaDB
 {
     public class ValueConstant
     {
         //*******************************************************************************
-        //    Versioning for this software
-
-        public string versionSW = " 1.0.0";
-
-        //*******************************************************************************
-        //    Connection MySql.Data.MySqlClient
-
-        public string nameServer = "127.0.0.1"; //localHost
-        public string nameUser = "localhost";
-        public string password = String.Empty; //Per il mio database, non ho selezionato alcuna password
-        public int port = 3306;
-
-
-        //*******************************************************************************
-        //    list of Database in localHost
-
-        public string databaseName = "employees";
-
-
-        //*******************************************************************************
         //    Array of tables
 
-        public string[] arrTable = new string[10];// { "person", "person2", "person3", "person4", "city", "country", "employeesname" };       
-        
+        public string[] arrTable = new string[100];// { "person", "person2", "person3", "person4", "city", "country", "employeesname" };       
+
         public void SetTablesArray(string tables)
         {
             arrTable = tables.Split(',');
@@ -65,6 +41,35 @@ namespace MariaDB
         public string deleteQuestionMSG = "DELETE ELEMENT?";
         public string sureQuestionMSG = "ARE YOU SHURE?";
         public string saveQuestionMSG = "SAVE INFORMATION?";
+
+    }
+
+    public static class CONSTANTS
+    {
+        //*******************************************************************************
+        //    Connection string for connecting with database 
+        public static string stringConnection = ""; //Viene inizializzata all'avvio del Form dedicato
+
+
+        //*******************************************************************************
+        //    Versioning for this software
+        public const string VERSION_SW = "1.0.0";
+        //  public static string VERSION_SW = "1.0.0";  //potrei indicare la variabile come statica, ma non visualizzerebbe il valore col puntatore
+        
+
+        //*******************************************************************************
+        //    Connection MySql.Data.MySqlClient
+        public const string NAME_SERVER = "127.0.0.1"; //localHost
+        public const string NAME_USER = "localhost";
+        public static string PASSWORD = String.Empty; //Per il mio database, non ho selezionato alcuna password, ma la variabile la rendiamo statica
+        public const int PORT = 3306;
+
+
+        //*******************************************************************************
+        //    list of Database in localHost
+
+        public const string DATABASE_NAME = "employees";
+
 
     }
 }

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace MariaDB
@@ -16,10 +9,10 @@ namespace MariaDB
         readonly QueryDatabase qdb = new QueryDatabase();
         readonly ValueConstant valCost = new ValueConstant();
 
-        readonly string stringConnection = "";       
+        readonly string stringConnection = "";
         string query;  //stringa query per la connessine
         string valueElement;
-        
+
 
 
         int idUpdate;
@@ -34,8 +27,7 @@ namespace MariaDB
         {
             this.IdElement = IdElement_; //Value ID dell'elemento           
             this.stringConnection = connection; //Settiamo la stringa di connessione
-            valueElement = valCost.valuesDB; //Elementi per query
-        
+            valueElement = valCost.valuesDB; //Elementi per query           
 
             InitializeComponent();
             dtg.SetUpDataGridViewHeaderString(dataGridTable, header);
@@ -86,7 +78,14 @@ namespace MariaDB
 
                 if (dataGridTable.Rows[0].Cells[i].Value != null)
                 {
-                    valueElement += dataGridTable.Rows[0].Cells[i].Value.ToString();
+                    if (dataGridTable.Rows[0].Cells[i].Value.ToString() != null)
+                    { 
+                        valueElement += dataGridTable.Rows[0].Cells[i].Value.ToString(); 
+                    }
+                    else
+                    {
+                        valueElement += " ";
+                    }
                 }
 
                 else
